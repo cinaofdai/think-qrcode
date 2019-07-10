@@ -11,9 +11,18 @@ composer require dh2y/think-qrcode
 或者
 
 ### 二、require安装
+
+##### thinkphp5.0 安装
 ```
 "require": {
-        "dh2y/think-qrcode":"*"
+        "dh2y/think-qrcode":"1.*"
+},
+```
+
+##### thinkphp5.1 安装
+```
+"require": {
+        "dh2y/think-qrcode":"2.*"
 },
 ```
 

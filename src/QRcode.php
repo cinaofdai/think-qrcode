@@ -9,9 +9,9 @@ namespace dh2y\qrcode;
 
 
 
-use think\Config;
 use think\Exception;
-use think\Request;
+use think\facade\Config;
+use think\facade\Request;
 
 
 
@@ -27,12 +27,12 @@ class QRcode
 
     public function __construct(){
 
-        $this->config= Config::get('qrcode');
+        $this->config= Config::get('qrcode.');
 
         if(isset($this->config['cache_dir'])&&$this->config['cache_dir']!=''){
             $this->cache_dir = $this->config['cache_dir'];
         }else{
-            $this->cache_dir = 'uploads'.DS.'qrcode';
+            $this->cache_dir = 'uploads/qrcode';
         }
 
 
@@ -55,7 +55,7 @@ class QRcode
     public function png($url,$outfile=false,$size=5,$evel='H'){
 
         if(!$outfile){
-            $outfile = $this->cache_dir.DS.time().'.png';
+            $outfile = $this->cache_dir.'/'.time().'.png';
         }
 
         $this->outfile = $outfile;
@@ -69,7 +69,7 @@ class QRcode
      * 显示二维码
      */
     public function show(){
-        $url = Request::instance()->domain().DS.$this->outfile;
+        $url = Request::instance()->domain().'/'.$this->outfile;
         exit('<img src="'.$url.'"/>');
     }
 
@@ -78,7 +78,7 @@ class QRcode
      * @return string
      */
     public function entry(){
-        return Request::instance()->domain().DS.$this->outfile;
+        return Request::instance()->domain().'/'.$this->outfile;
     }
 
     /**
@@ -88,7 +88,7 @@ class QRcode
      */
     public function getPath($ds=true){
         if($ds){
-            return DS.$this->outfile;
+            return '/'.$this->outfile;
         }else{
             return $this->outfile;
         }
@@ -126,7 +126,7 @@ class QRcode
         //重新组合图片并调整大小
         imagecopyresampled($QR, $logo, $from_width, $from_width, 0, 0, $logo_qr_width, $logo_qr_height, $logo_width, $logo_height);
 
-        $this->outfile = $this->cache_dir.DS.time().'.png';
+        $this->outfile = $this->cache_dir.'/'.time().'.png';
         imagepng($QR, $this->outfile);
         imagedestroy($QR);
         return $this;
@@ -157,7 +157,7 @@ class QRcode
         //将覆盖图复制到目标图片上，最后个参数100是设置透明度（100是不透明），这里实现不透明效果
         imagecopymerge($dst, $src, $x, $y, 0, 0, $src_w, $src_h, 100);
 
-        $this->outfile = $this->cache_dir.DS.time().'.png';
+        $this->outfile = $this->cache_dir.'/'.time().'.png';
         imagepng($dst, $this->outfile);//根据需要生成相应的图片
         imagedestroy($dst);
         return $this;
@@ -183,7 +183,7 @@ class QRcode
 
         //如果字体不存在 用composer项目自己的字体
         if(!is_file($font)){
-            $font =  dirname(__FILE__).DS.$font;
+            $font =  dirname(__FILE__).'/'.$font;
         }
 
         //获取文字信息
@@ -217,7 +217,7 @@ class QRcode
 
 
         //生成图片
-        $this->outfile = $this->cache_dir.DS.time().'.png';
+        $this->outfile = $this->cache_dir.'/'.time().'.png';
         imagepng($dst, $this->outfile);
         imagedestroy($dst);
 
