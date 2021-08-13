@@ -40,7 +40,7 @@ class QRcode
             mkdir ($this->cache_dir,0775,true);
         }
 
-        require("phpqrcode/qrlib.php");
+        require_once("phpqrcode/qrlib.php");
     }
 
 
