@@ -125,7 +125,7 @@ class QRcode
         $from_width = ($QR_width - $logo_qr_width) / 2;
         //重新组合图片并调整大小
         imagecopyresampled($QR, $logo, $from_width, $from_width, 0, 0, $logo_qr_width, $logo_qr_height, $logo_width, $logo_height);
-        if($this->outfile == '') $outfile = $this->cache_dir.'/'.time().'.png';
+     
         $this->outfile = $this->cache_dir.'/'.time().'.png';
         imagepng($QR, $this->outfile);
         imagedestroy($QR);
@@ -157,7 +157,7 @@ class QRcode
         //将覆盖图复制到目标图片上，最后个参数100是设置透明度（100是不透明），这里实现不透明效果
         imagecopymerge($dst, $src, $x, $y, 0, 0, $src_w, $src_h, 100);
 
-        if($this->outfile == '') $outfile = $this->cache_dir.'/'.time().'.png';
+        $this->outfile = $this->cache_dir.'/'.time().'.png';
         imagepng($dst, $this->outfile);//根据需要生成相应的图片
         imagedestroy($dst);
         return $this;
@@ -217,7 +217,7 @@ class QRcode
 
 
         //生成图片
-        if($this->outfile == '') $outfile = $this->cache_dir.'/'.time().'.png';
+        $this->outfile = $this->cache_dir.'/'.time().'.png';
         imagepng($dst, $this->outfile);
         imagedestroy($dst);
 
